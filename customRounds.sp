@@ -21,8 +21,8 @@
 #include <cstrike>
 #include <sdkhooks>
 
-new bool:revolver;
 new bool:usp;
+new bool:deagle;
 new bool:m249;
 new bool:negev;
 new bool:nova;
@@ -54,8 +54,8 @@ public OnPluginStart()
 {
 	HookEvent("round_prestart", Restart);
 	HookEvent("player_spawn", Event_PlayerSpawn);
-	RegAdminCmd("sm_revolver", roundRevolver, ADMFLAG_GENERIC);
 	RegAdminCmd("sm_usp", roundUSP, ADMFLAG_GENERIC);
+	RegAdminCmd("sm_deagle", roundDeagle, ADMFLAG_GENERIC);
 	RegAdminCmd("sm_m249", roundM249, ADMFLAG_GENERIC);
 	RegAdminCmd("sm_negev", roundNegev, ADMFLAG_GENERIC);
 	RegAdminCmd("sm_nova", roundNova, ADMFLAG_GENERIC);
@@ -78,9 +78,9 @@ public OnPluginStart()
 		}
 }
 
-public Action:roundRevolver(client, args)
+public Action:roundDeagle(client, args)
 {
-	revolver = true;
+	deagle = true;
 	SetBuyZones("Disable");
 	for(new i = 1; i <= MaxClients; i++)
 		if(IsClientInGame(i) && GetClientTeam(i) > 1)
@@ -277,7 +277,7 @@ public Action:Restart(Handle:event, const String:name[], bool:dontBroadcast)
 	for(new i = 1; i <= MaxClients; i++)
 		if(IsClientInGame(i)) OnClientDisconnect(i);
 	
-	revolver = false;
+	deagle = false;
 	usp=false;
 	m249=false;
 	negev=false;
@@ -303,7 +303,7 @@ public OnClientPutInServer(client)
 
 public Action:OnWeaponCanUse(client, weapon)
 {
-	if(revolver || usp || m249 || negev || nova || xm10 || mp5 || mp7 || mp9 || m4 || m4s || aug || ak47 || skout || awp || zeus)
+	if(deagle || usp || m249 || negev || nova || xm10 || mp5 || mp7 || mp9 || m4 || m4s || aug || ak47 || skout || awp || zeus)
 	{
 		new index = GetEntProp(weapon, Prop_Send, "m_iItemDefinitionIndex");
 		decl String:classname[64];
@@ -320,12 +320,12 @@ public Action:OnWeaponCanUse(client, weapon)
 public Event_PlayerSpawn(Handle:event, const String:name[], bool:dontBroadcast)
 {	
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
-	if(revolver || usp || m249 || negev || nova || xm10 || mp5 || mp7 || mp9 || m4 || m4s || aug || ak47 || skout || awp || zeus) DoRound(client);
+	if(deagle || usp || m249 || negev || nova || xm10 || mp5 || mp7 || mp9 || m4 || m4s || aug || ak47 || skout || awp || zeus) DoRound(client);
 }
 
 public Action:CS_OnCSWeaponDrop(client, weaponindex)
 {
-	if(revolver || usp || m249 || negev || nova || xm10 || mp5 || mp7 || mp9 || m4 || m4s || aug || ak47 || skout || awp || zeus) return Plugin_Handled;
+	if(deagle || usp || m249 || negev || nova || xm10 || mp5 || mp7 || mp9 || m4 || m4s || aug || ak47 || skout || awp || zeus) return Plugin_Handled;
 	
 	return Plugin_Continue;
 }
@@ -340,9 +340,9 @@ DoRound(client)
 	
 	StripAllWeapons(client);
 	
-	if(revolver){
+	if(deagle){
 		GivePlayerItem(client, "weapon_knife");
-		GivePlayerItem(client, "weapon_revolver");
+		GivePlayerItem(client, "weapon_deagle");
 		}
 	else if(usp){
 		GivePlayerItem(client, "weapon_knife");
