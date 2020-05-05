@@ -1,6 +1,6 @@
-# CSGO_CustomRounds
+# CSGO Advanced Custom Rounds
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/Shivam169)  
-A plugins to execute Custom Rounds.
+A plugin for Admins to execute Custom Rounds. Just type the command and choose round from the menu.
 Following rounds are available in v1.2
 - Knife Only Round
 - Zeus + Nades Round
