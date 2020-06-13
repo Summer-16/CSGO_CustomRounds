@@ -28,7 +28,7 @@ public Plugin: myinfo = {
     name = "Advanced Custom Rounds",
     author = "Summer Soldier",
     description = "Advanced Custom Rounds by Summer Soldier",
-    version = "1.2",
+    version = "1.3",
     url = "https://github.com/Summer-16"
 };
 
@@ -38,8 +38,7 @@ public void OnPluginStart() {
     RegAdminCmd("sm_rounds", roundsMenu, ADMFLAG_GENERIC);
 }
 
-public Action: Restart(Handle: event,
-    const String: name[], bool: dontBroadcast) {
+public Action: Restart(Handle: event, const String: name[], bool: dontBroadcast) {
     for (new i = 1; i <= MaxClients; i++) {
         if (IsClientInGame(i)) {
             OnClientDisconnect(i);
@@ -47,6 +46,7 @@ public Action: Restart(Handle: event,
     }
     roundEnabled = false;
     ServerCommand("wr_reload");
+    ServerCommand("mp_damage_headshot_only 0");
 }
 
 public Action startTheCustomRounds(Handle timer)
@@ -139,8 +139,7 @@ public Action roundsMenu(int client, int args) {
     return Plugin_Handled;
 }
 
-public Event_PlayerSpawn(Handle: event,
-    const String: name[], bool: dontBroadcast) {
+public Event_PlayerSpawn(Handle: event, const String: name[], bool: dontBroadcast) {
     new client = GetClientOfUserId(GetEventInt(event, "userid"));
     if (roundEnabled) {
         execRound(client);
@@ -168,42 +167,52 @@ execRound(client) {
             GivePlayerItem(client, "weapon_taser");
         }
         case 2: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_usp_silencer");
         }
         case 3: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_deagle");
         }
         case 4: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
-            GivePlayerItem(client, "weapon_deagle");
+            GivePlayerItem(client, "weapon_elite");
         }
         case 5: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_fiveseven");
         }
         case 6: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_glock");
         }
         case 7: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_hkp2000");
         }
         case 8: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_p250");
         }
         case 9: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_tec9");
         }
         case 10: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_cz75a");
         }
         case 11: {
+            ServerCommand("mp_damage_headshot_only 1");
             GivePlayerItem(client, "weapon_knife");
             GivePlayerItem(client, "weapon_revolver");
         }
